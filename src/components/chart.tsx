@@ -18,12 +18,8 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-const chartData = [
-  { name: "食物", price: 600.0, fill: "var(--color-chrome)" },
-  { name: "衣服", price: 300.0, fill: "var(--color-safari)" },
-  { name: "出行", price: 300.0, fill: "var(--color-firefox)" },
-  { name: "住房", price: 1700.0, fill: "var(--color-edge" },
-]
+import { ChartData } from "@/App"
+
 
 const chartConfig = {
   price: {
@@ -50,10 +46,13 @@ const chartConfig = {
     color: "hsl(var(--chart-5))",
   },
 } satisfies ChartConfig
+interface ChartDataProps{
+    chartData: Array<ChartData>
+}
+export function MyChart(props:ChartDataProps) {
 
-export function MyChart() {
   const totalVisitors = React.useMemo(() => {
-    return chartData.reduce((acc, curr) => acc + curr.price, 0)
+    return props.chartData.reduce((acc, curr) => acc + curr.price, 0)
   }, [])
 
   return (
@@ -73,7 +72,7 @@ export function MyChart() {
               content={<ChartTooltipContent hideLabel />}
             />
             <Pie
-              data={chartData}
+              data={props.chartData}
               dataKey="price"
               nameKey="name"
               innerRadius={60}
