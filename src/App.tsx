@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import MyButton from './components/buttonExample'
 import { MyChart } from './components/chart'
@@ -11,18 +11,22 @@ export interface ChartData{
 }
 
 function App() {
-  const chartData: Array<ChartData> = [
+  
+  let chartData: Array<ChartData> = [
     { name: "食物", price: 600.0, fill: "var(--color-chrome)" },
     { name: "衣服", price: 300.0, fill: "var(--color-safari)" },
     { name: "出行", price: 300.0, fill: "var(--color-firefox)" },
     { name: "住房", price: 1700.0, fill: "var(--color-edge" },
+    
   ]
+  const [chart,setChart] =useState<Array<ChartData>>(chartData)
 
   const [count, setCount] = useState(0)
-  function SaveExpense(expense: string, price: number) {
-    console.log(expense);
-    console.log(price)
 
+  function SaveExpense(expense: string, price: number) {
+    const newExpense: ChartData = {name: expense, price: price, fill: "val(--primary)"}
+    chart.push(newExpense)
+    setChart([...chart,newExpense])
   }
 
 
@@ -30,7 +34,7 @@ function App() {
     <>
       <div className='main-content'>
         <div className='container '>
-          <MyChart chartData={chartData} />
+          <MyChart chartData={chart} />
 
         </div>
         <div className='container'>

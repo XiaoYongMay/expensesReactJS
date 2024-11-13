@@ -49,11 +49,14 @@ const chartConfig = {
 interface ChartDataProps{
     chartData: Array<ChartData>
 }
-export function MyChart(props:ChartDataProps) {
+export function MyChart({chartData}:ChartDataProps) {
+  const [totalVisitors, setTotalVisitors] = React.useState(0)
 
-  const totalVisitors = React.useMemo(() => {
-    return props.chartData.reduce((acc, curr) => acc + curr.price, 0)
-  }, [])
+  React.useEffect(() => {
+    const total = chartData.reduce((acc, curr) => acc + curr.price, 0)
+    setTotalVisitors(total)
+  }, [chartData])
+  
 
   return (
     <Card className="flex flex-col">
@@ -72,7 +75,7 @@ export function MyChart(props:ChartDataProps) {
               content={<ChartTooltipContent hideLabel />}
             />
             <Pie
-              data={props.chartData}
+              data={chartData}
               dataKey="price"
               nameKey="name"
               innerRadius={60}
