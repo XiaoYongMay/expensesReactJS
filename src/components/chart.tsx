@@ -45,6 +45,14 @@ const chartConfig = {
     label: "Other",
     color: "hsl(var(--chart-5))",
   },
+  secondary: {
+    label: "Secondary",
+    color: "hsl(var(--secondary))"
+  },
+  blue: { // 给颜色变量命名 example var(--color-blue)
+    label: "Blue", // 给颜色变量命名
+    color: "#0ea5e9" // 给颜色变量命名
+  }
 } satisfies ChartConfig
 interface ChartDataProps{
     chartData: Array<ChartData>

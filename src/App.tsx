@@ -16,15 +16,26 @@ function App() {
     { name: "食物", price: 600.0, fill: "var(--color-chrome)" },
     { name: "衣服", price: 300.0, fill: "var(--color-safari)" },
     { name: "出行", price: 300.0, fill: "var(--color-firefox)" },
-    { name: "住房", price: 1700.0, fill: "var(--color-edge" },
+    { name: "住房", price: 1700.0, fill: "var(--color-edge)" },
     
   ]
   const [chart,setChart] =useState<Array<ChartData>>(chartData)
 
   const [count, setCount] = useState(0)
-
+  
+  const colors:Array<string> = [
+    "var(--color-primary)",
+    "var(--color-secondary)",
+    "var(--color-blue)",
+    "var(--color-green)",
+    "var(--color-yellow)",
+ ]
+ const[colorIndex,setColorIndex]=useState(0)
   function SaveExpense(expense: string, price: number) {
-    const newExpense: ChartData = {name: expense, price: price, fill: "val(--primary)"}
+    const newColors: string =colors[colorIndex]
+    console.log("new color: ", newColors)
+    const newExpense: ChartData = {name: expense, price: price, fill: newColors}
+    setColorIndex((colorIndex) => colorIndex + 1)
     chart.push(newExpense)
     setChart([...chart,newExpense])
   }
