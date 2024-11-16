@@ -3,6 +3,7 @@ import './App.css'
 import MyButton from './components/buttonExample'
 import { MyChart } from './components/chart'
 import InputExpense from './components/input'
+import { ExpensesTable } from './components/ExpensesTable'
 
 export interface ChartData{
   name: string
@@ -50,6 +51,7 @@ function App() {
         </div>
         <div className='container'>
           <InputExpense saveExpense={SaveExpense} />
+          <ExpensesTable expenses={chart}/>
         </div>
       </div>
     </>
