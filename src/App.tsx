@@ -5,41 +5,49 @@ import { MyChart } from './components/chart'
 import InputExpense from './components/input'
 import { ExpensesTable } from './components/ExpensesTable'
 
-export interface ChartData{
+export interface ChartData {
   name: string
   price: number
   fill: string
 }
 
 function App() {
-  
-  let chartData: Array<ChartData> = [
-    { name: "食物", price: 600.0, fill: "var(--color-chrome)" },
-    { name: "衣服", price: 300.0, fill: "var(--color-safari)" },
-    { name: "出行", price: 300.0, fill: "var(--color-firefox)" },
-    { name: "住房", price: 1700.0, fill: "var(--color-edge)" },
-    
-  ]
-  const [chart,setChart] =useState<Array<ChartData>>(chartData)
+
+  let chartData: Array<ChartData> = []
+  const [table,setTable] = useState<Array<ChartData>>(chartData)
+
+  const [chart, setChart] = useState<Array<ChartData>>(chartData)
 
   const [count, setCount] = useState(0)
-  
-  const colors:Array<string> = [
+
+  const colors: Array<string> = [
     "var(--color-primary)",
     "var(--color-secondary)",
     "var(--color-blue)",
     "var(--color-green)",
     "var(--color-yellow)",
- ]
- const[colorIndex,setColorIndex]=useState(0)
+  ]
+  const [colorIndex, setColorIndex] = useState(0)
   function SaveExpense(expense: string, price: number) {
-    const newColors: string =colors[colorIndex]
-    console.log("new color: ", newColors)
-    const newExpense: ChartData = {name: expense, price: price, fill: newColors}
-    setColorIndex((colorIndex) => colorIndex + 1)
-    chart.push(newExpense)
-    setChart([...chart,newExpense])
+    const expenseIndex = chart.findIndex(chartExpense => chartExpense.name == expense)
+    const newColors: string = colors[colorIndex]
+    const newExpense: ChartData = { name: expense, price: price, fill: newColors }
+    
+    
+    //如果存在费用，更新价格
+    if (expenseIndex !== -1) {
+      const updatedChart = [...chart]
+      updatedChart[expenseIndex].price += price
+      setChart(updatedChart)
+    } else {
+      // 如果费用不存在，添加到列表中
+      setColorIndex((colorIndex) => colorIndex + 1)
+      setChart([...chart, newExpense])
+    }
+    setTable([...table,newExpense])
   }
+
+  function DeleteExpense(){}
 
 
   return (
@@ -51,7 +59,7 @@ function App() {
         </div>
         <div className='container'>
           <InputExpense saveExpense={SaveExpense} />
-          <ExpensesTable expenses={chart}/>
+          <ExpensesTable expenses={table} />
         </div>
       </div>
     </>
