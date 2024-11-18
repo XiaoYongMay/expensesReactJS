@@ -59,10 +59,29 @@ interface ChartDataProps{
 }
 export function MyChart({chartData}:ChartDataProps) {
   const [totalVisitors, setTotalVisitors] = React.useState(0)
-
+  const [newData,setNewData] = React.useState<Array<ChartData>>([])
   React.useEffect(() => {
     const total = chartData.reduce((acc, curr) => acc + curr.price, 0)
     setTotalVisitors(total)
+
+    const newData: Array<ChartData> = []
+    chartData.forEach((item) => {
+      const expenseIndex = newData.findIndex(data => data.name === item.name)
+
+      if (expenseIndex !== -1) {
+        newData[expenseIndex].price += item.price
+        return
+      }
+
+      newData.push({
+        name: item.name,
+        price: item.price,
+        fill: item.fill
+      })
+    })
+
+    setNewData(newData)
+
   }, [chartData])
   
 
@@ -83,7 +102,7 @@ export function MyChart({chartData}:ChartDataProps) {
               content={<ChartTooltipContent hideLabel />}
             />
             <Pie
-              data={chartData}
+              data={newData}
               dataKey="price"
               nameKey="name"
               innerRadius={60}
