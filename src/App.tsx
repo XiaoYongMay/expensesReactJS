@@ -4,6 +4,7 @@ import MyButton from './components/buttonExample'
 import { MyChart } from './components/chart'
 import InputExpense from './components/input'
 import { ExpensesTable } from './components/ExpensesTable'
+import ColorInput from './components/colorInput'
 
 export interface ChartData {
   name: string
@@ -20,17 +21,10 @@ function App() {
 
   const [count, setCount] = useState(0)
 
-  const colors: Array<string> = [
-    "var(--color-primary)",
-    "var(--color-secondary)",
-    "var(--color-blue)",
-    "var(--color-green)",
-    "var(--color-yellow)",
-  ]
+
   const [colorIndex, setColorIndex] = useState(0)
   function SaveExpense(expense: string, price: number) {
-    const newColors: string = colors[colorIndex]
-    const newExpense: ChartData = { name: expense, price: price, fill: newColors }
+    const newExpense: ChartData = { name: expense, price: price, fill: "" }
 
     setColorIndex((colorIndex) => colorIndex + 1)
     setChart([...chart, newExpense])
@@ -49,6 +43,7 @@ function App() {
         </div>
         <div className='container'>
           <InputExpense saveExpense={SaveExpense} />
+          <ColorInput />
           <ExpensesTable expenses={chart} />
         </div>
       </div>
