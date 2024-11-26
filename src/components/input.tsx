@@ -1,9 +1,11 @@
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useState } from "react";
+import ColorInput from './colorInput'
 
 interface InputExpenseProp {
  saveExpense: (expense: string, price: number) => void
+ setColor: (color: string) => void
 }
 
 function InputExpense(props:InputExpenseProp) {
@@ -19,6 +21,7 @@ function InputExpense(props:InputExpenseProp) {
     <div>
       <Input type="text" placeholder="Expense" value={expense} onChange={(e) => { setExpense(e.target.value) }} />
       <Input type="number" placeholder="Price" value={price} onChange={(e) => { setPrice(Number(e.target.value)) }} />
+      <ColorInput changeColor={props.setColor} />
       <Button onClick={() => AddExpense()}>Add Expense</Button>
     </div>
   );

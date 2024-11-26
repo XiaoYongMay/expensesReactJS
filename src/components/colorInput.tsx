@@ -14,12 +14,12 @@ interface Props {
     changeColor: (color: string) => void
 }
 
-function ColorInput() {
+function ColorInput({changeColor}:Props) {
     const [color, setColor] = useState("")
     const listColors: Array<string> = ["black", "blue","yellow","green","pink","purple"]
 
     function onColorChanged(color: string){
-        
+        changeColor(color)
         console.log(color)
     }
 

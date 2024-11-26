@@ -84,7 +84,7 @@ export function MyChart({ chartData }: ChartDataProps) {
   React.useEffect(() => {
     const total = chartData.reduce((previous, current) => previous + current.price, 0)
     setTotalVisitors(total)
-    let colorIndex = 0
+   
 
     const newData: Array<ChartData> = []
     chartData.forEach((item) => {
@@ -97,12 +97,11 @@ export function MyChart({ chartData }: ChartDataProps) {
       } else {
         // if expense does not exists add color and increment color index
         //如果费用不存在添加新的颜色和增加颜色索引 
-        const newColor = colors[colorIndex]
-        colorIndex += 1
+       
         newData.push({
           name: item.name,
           price: item.price,
-          fill: newColor
+          fill:item.fill
         })
       }
 
